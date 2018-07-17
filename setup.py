@@ -13,7 +13,7 @@ def read(*names, **kwargs):
         return fp.read()
 
 
-long_description = read('README.rst')
+long_description = read('README.md')
 
 
 def find_version(*file_paths):
