@@ -1,0 +1,3 @@
+
+class SeedDMSException(Exception):
+    pass
