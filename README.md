@@ -21,12 +21,13 @@ Example content:
 ```ini
 
 [main]
-baseurl =
-http://localhost/seeddms/restapi/index.php
+baseurl = http://localhost/seeddms/restapi/index.php
 username = admin
 password = admin
 targetfolder = DMS
 ```
+
+Example code:
 
 ```python
 
