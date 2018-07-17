@@ -26,7 +26,7 @@ def find_version(*file_paths):
 
 setup(name='seeddms',
       version=find_version('seeddms', 'version.py'),
-      description='SeedDMS cli',
+      description='SeedDMS REST API',
       long_description=long_description,
       url='',
       author='John van Zantvoort',
