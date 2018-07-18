@@ -49,6 +49,6 @@ for row in sdms.get_categories():
 Testing
 -------
 
-For testing I use a forked and updates (docker-seeddms
-image)[https://github.com/jvzantvoort/docker-seeddms] That provides
+For testing I use a forked and updates [docker-seeddms
+image](https://github.com/jvzantvoort/docker-seeddms) That provides
 the imterface to which the functions connect.
