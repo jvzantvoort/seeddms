@@ -1,6 +1,6 @@
 # seeddms
 
-Python library to access the SeedDMS REST API
+Python library to access the SeedDMS REST API. Written against version 5.1.8.
 
 Install
 -------
