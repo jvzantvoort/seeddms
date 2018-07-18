@@ -4,42 +4,32 @@ import io
 import os
 import re
 
+setup_path = os.path.abspath(__file__)
+setup_path_dir = os.path.dirname(setup_path)
 
-def read(*names, **kwargs):
-    with io.open(
-        os.path.join(os.path.dirname(__file__), *names),
-        encoding=kwargs.get("encoding", "utf8")
-    ) as fp:
-        return fp.read()
+exec(open(os.path.join(setup_path_dir, 'seeddms', 'version.py')).read())
 
+long_description = open(os.path.join(setup_path_dir, 'README.md')).read()
 
-long_description = read('README.md')
-
-
-def find_version(*file_paths):
-    version_file = read(*file_paths)
-    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]", version_file, re.M)
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
-
-
-setup(name='seeddms',
-      version=find_version('seeddms', 'version.py'),
-      description='SeedDMS REST API',
-      long_description=long_description,
-      url='',
-      author='John van Zantvoort',
-      author_email='john@vanzantvoort.org',
-      license='MIT',
-      classifiers=[
-            'Development Status :: 5 - Production/Stable',
-            'Intended Audience :: Developers',
-            'Topic :: Office/Business',
-            'License :: OSI Approved :: MIT License',
-            'Programming Language :: Python :: 2',
-            'Programming Language :: Python :: 2.7',
-      ],
-      keywords='dms seeddms',
-      packages=find_packages(exclude=['docs', 'docs-src', 'tests']),
-      install_requires=[])
+setup(
+    name='seeddms',
+    version=__version__,
+    description='SeedDMS REST API',
+    keywords='dms seeddms',
+    long_description=long_description,
+    author='John van Zantvoort',
+    author_email='john@vanzantvoort.org',
+    url='https://github.com/jvzantvoort/seeddms',
+    packages=find_packages(exclude=['docs', 'docs-src', 'tests']),
+    install_requires=['requests'],
+    license='MIT',
+    test_suite="tests",
+    classifiers=[
+          'Development Status :: 5 - Production/Stable',
+          'Intended Audience :: Developers',
+          'Topic :: Office/Business',
+          'License :: OSI Approved :: MIT License',
+          'Programming Language :: Python :: 2',
+          'Programming Language :: Python :: 2.7',
+    ]
+)
