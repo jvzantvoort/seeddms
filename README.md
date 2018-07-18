@@ -45,3 +45,10 @@ for row in sdms.get_categories():
     print row.get('name')
 
 ```
+
+Testing
+-------
+
+For testing I use a forked and updates (docker-seeddms
+image)[https://github.com/jvzantvoort/docker-seeddms] That provides
+the imterface to which the functions connect.
