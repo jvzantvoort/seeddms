@@ -213,7 +213,6 @@ class SeedDMS(object):
             req_obj = requests.get(url, params=params, cookies=self.cookies)
 
         if raw:
-            print dir(req_obj)
             if req_obj.status_code == 200:
                 return req_obj.content
         return SeedDMSData(req_obj)
@@ -390,7 +389,7 @@ class SeedDMS(object):
         :type fullname: str
 
         """
-        req_obj = self.rest_put("/account/fullname", params={'fullname': emailaddress})
+        req_obj = self.rest_put("/account/fullname", params={'fullname': fullname})
         if req_obj.success:
             return req_obj.data
 
@@ -756,9 +755,6 @@ class SeedDMS(object):
             url += '/:id'
             argdict['id'] = folder_id
 
-        print "url: " + url
-        print argdict
-        print kwargs
         req_obj = self.rest_get(url, argdict=argdict, params=kwargs)
         if req_obj.success:
             return req_obj.data
