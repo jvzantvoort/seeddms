@@ -278,6 +278,7 @@ class SeedDMS(object):
 
         return SeedDMSData(req_obj)
 
+
 # ------------------------------------------------------------------------------
 # LOGIN/LOGOUT
 # ------------------------------------------------------------------------------
@@ -469,6 +470,21 @@ class SeedDMS(object):
             name = row.get('name')
             if category_name == name:
                 return row.get('id')
+
+    def has_category(self, category_name):
+        """Return ``True`` if ``category_name`` exists
+
+        :param category_name: name of the category
+        :type category_name: str
+        :returns: ``True`` or ``False``
+        :rtype: bool
+        """
+        for row in self.get_categories():
+            name = row.get('name')
+            if category_name == name:
+                return True
+        return False
+
 
     def get_category(self, category_id):
         """get category information for a category id.
