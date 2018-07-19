@@ -9,4 +9,3 @@ __license__ = "MIT"
 
 from .config import Config
 from .rest import SeedDMS
-
