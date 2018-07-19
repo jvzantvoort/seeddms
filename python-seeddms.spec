@@ -4,7 +4,7 @@
 
 Name:           python-seeddms
 Version:        0.0.2
-Release:        3
+Release:        4
 Summary:        Python library to access the SeedDMS REST API
 
 Group:          Development/Libraries
@@ -51,6 +51,9 @@ popd
 %doc docs/build/html
 
 %changelog
+* Thu Jul 19 2018 John van Zantvoort <john@vanzantvoort.org> 0.0.2-4
+- updated specfile some more (john@vanzantvoort.org)
+
 * Thu Jul 19 2018 John van Zantvoort <john@vanzantvoort.org> 0.0.2-3
 - more fidling with spec (john@vanzantvoort.org)
 
