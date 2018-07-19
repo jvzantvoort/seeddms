@@ -10,7 +10,7 @@ Summary:        An interface to seeddms REST API
 Group:          Development/Libraries
 License:        MIT
 URL:            https://github.com/jvzantvoort/seeddms
-Source0:        %{srcname}-%{version}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  python2-devel python-setuptools python-sphinx
