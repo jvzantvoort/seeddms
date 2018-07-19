@@ -485,7 +485,6 @@ class SeedDMS(object):
                 return True
         return False
 
-
     def get_category(self, category_id):
         """get category information for a category id.
 
@@ -872,7 +871,39 @@ class SeedDMS(object):
 
         folder_id = req_obj.data.get('id')
 
-    def upload_document(self, uploadfile, foldername=None, **kwargs):
+    def __upload_document(self, action, folder_id, documentpath, name=None, **kwargs):
+        """
+
+        """
+        params = dict()
+        req_obj = None
+        origfilename = os.path.basename(documentpath)
+        datablob = open(documentpath, "r").read()
+
+        if name is None:
+            name = origfilename
+
+        params = {'name': name, 'origfilename': origfilename}
+
+        for item in ['comment', 'version', 'public']:
+            if item in kwargs:
+                params[item] = kwargs[item]
+
+        if action == "post":
+            req_obj = self.rest_post("/folder/:id/document",
+                                     argdict={'id': folder_id},
+                                     data=datablob,
+                                     params=params)
+        elif action == "put":
+            req_obj = self.rest_put("/folder/:id/document",
+                                    argdict={'id': folder_id},
+                                    data=datablob,
+                                    params=params)
+
+        if req_obj.success:
+            return req_obj.data
+
+    def upload_document(self, folder_id, documentpath, name=None, **kwargs):
         """
           arguments:
             - name
@@ -880,58 +911,16 @@ class SeedDMS(object):
             - origfilename
             - foldername (opt)
         """
-        params = dict()
+        return self.__upload_document("post", folder_id, documentpath, name, **kwargs)
 
-        # FIXME: dunno if this works
-        datablob = open(uploadfile, "r").read()
-
-        origfilename = os.path.basename(uploadfile)
-        params['name'] = kwargs.get('origfilename', origfilename)
-        params['origfilename'] = origfilename
-        if 'keywords' in kwargs:
-            params['keywords'] = kwargs.get('keywords')
-
-        foldername = kwargs.get('foldername')
-
-        params['foldername'] = kwargs.get('targetfolder', self.targetfolder)
-
-        folder_id = self.get_folder_id(foldername)
-
-        req_obj = self.rest_post("/folder/:id/document",
-                                 argdict={'id': folder_id},
-                                 data=datablob,
-                                 params=params)
-        if req_obj.success:
-            return req_obj.data
-
-    def upload_document_put(self, folder_id):
+    def upload_document_put(self, folder_id, documentpath, name, **kwargs):
         """
-
-            +----------+----------------------+
-            | def      | upload_document_put  |
-            +----------+----------------------+
-            | function | uploadDocumentPut    |
-            +----------+----------------------+
-            | url      | /folder/:id/document |
-            +----------+----------------------+
-            | action   | put                  |
-            +----------+----------------------+
-
-          arguments:
-            - name
-            - origfilename
-            - foldername (opt)
-
-        # FIXME: dunno if this works
-        datablob = open(uploadfile, "r").read()
-        self.rest_put("/folder/:id/document",
-                                 argdict={'id': folder_id},
-                                 data=datablob,
-                                 params=params)
-        if req_obj.success:
-            return req_obj.data
+        arguments:
+          - name
+          - origfilename
+          - foldername (opt)
         """
-        pass
+        return self.__upload_document("put", folder_id, documentpath, name, **kwargs)
 
     def move_folder(self, folder_id, parent_folder_id):
         """
@@ -970,60 +959,33 @@ class SeedDMS(object):
 
     def remove_group_access_from_folder(self, folder_id, group_id, mode):
         """
-
-            +----------+---------------------------------+
-            | def      | remove_group_access_from_folder |
-            +----------+---------------------------------+
-            | function | removeGroupAccessFromFolder     |
-            +----------+---------------------------------+
-            | url      | /folder/:id/access/group/remove |
-            +----------+---------------------------------+
-            | action   | put                             |
-            +----------+---------------------------------+
-
-          arguments:
-            - id, user or group id input
-            - mode, read/readwrite/all
         """
-        pass
+        req_obj = self.rest_put("/folder/:id/access/group/remove",
+                                argdict={'id': folder_id},
+                                params={'id': group_id,
+                                        'mode': mode})
+        if req_obj.success:
+            return req_obj.data
 
-    def add_user_access_to_folder(self, folder_id):
+    def add_user_access_to_folder(self, folder_id, group_id, mode):
         """
-
-            +----------+-----------------------------+
-            | def      | add_user_access_to_folder   |
-            +----------+-----------------------------+
-            | function | addUserAccessToFolder       |
-            +----------+-----------------------------+
-            | url      | /folder/:id/access/user/add |
-            +----------+-----------------------------+
-            | action   | put                         |
-            +----------+-----------------------------+
-
-          arguments:
-            - id, user or group id input
-            - mode, read/readwrite/all
         """
-        pass
+        req_obj = self.rest_put("/folder/:id/access/user/add",
+                                argdict={'id': folder_id},
+                                params={'id': group_id,
+                                        'mode': mode})
+        if req_obj.success:
+            return req_obj.data
 
-    def remove_user_access_from_folder(self, folder_id):
+    def remove_user_access_from_folder(self, folder_id, group_id, mode):
         """
-
-            +----------+--------------------------------+
-            | def      | remove_user_access_from_folder |
-            +----------+--------------------------------+
-            | function | removeUserAccessFromFolder     |
-            +----------+--------------------------------+
-            | url      | /folder/:id/access/user/remove |
-            +----------+--------------------------------+
-            | action   | put                            |
-            +----------+--------------------------------+
-
-          arguments:
-            - id, user or group id input
-            - mode, read/readwrite/all
         """
-        pass
+        req_obj = self.rest_put("/folder/:id/access/user/remove",
+                                argdict={'id': folder_id},
+                                params={'id': group_id,
+                                        'mode': mode})
+        if req_obj.success:
+            return req_obj.data
 
     def set_folder_inherits_access(self, folder_id):
         """
