@@ -4,7 +4,7 @@
 %global srcversion 0.0.1
 
 Name:           python-seeddms
-Version:        0.0.1
+Version:        0.0.2
 Release:        1%{?dist}
 Summary:        An interface to seeddms REST API
 
@@ -65,4 +65,7 @@ popd
 %doc docs/build/html
 
 %changelog
+* Thu Jul 19 2018 John van Zantvoort <john@vanzantvoort.org> 0.0.2-1
+- new package built with tito
+
 
