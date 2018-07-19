@@ -6,10 +6,9 @@ import requests
 import os
 import re
 import hashlib
-import pprint
 import json
-import urllib
 from .exceptions import SeedDMSException
+
 
 class SeedDMSData(object):
     """class to store the results for a request object
@@ -28,7 +27,7 @@ class SeedDMSData(object):
         obj = self.return_data(url)
         if obj.success:
             for x in obj:
-                print x 
+                print x
         else:
             print obj.message
 
@@ -113,6 +112,7 @@ class SeedDMSData(object):
         """
         return self.json_obj.get('message', '')
 
+
 class SeedDMS(object):
     """Raw REST interface for SeedDMS
 
@@ -162,7 +162,7 @@ class SeedDMS(object):
     def __tr_params(self, params):
 
         retv = dict()
-        if params == None:
+        if params is None:
             return retv
 
         for keyname, keyvalue in params.iteritems():
@@ -366,7 +366,6 @@ class SeedDMS(object):
         if req_obj.success:
             return req_obj.data
 
-
     def set_email(self, emailaddress):
         """set the email address for the logged in user.
 
@@ -430,8 +429,8 @@ class SeedDMS(object):
 
         """
         req_obj = self.rest_put("/attributedefinitions/:id/name",
-                             argdict={'id': attribute_id},
-                             params={'name': name})
+                                argdict={'id': attribute_id},
+                                params={'name': name})
         if req_obj.success:
             return req_obj.data
 
@@ -674,12 +673,12 @@ class SeedDMS(object):
 
         arguments passed to :meth:`rest_post`:
 
-        * **comment**, 
-        * **keywords**, 
-        * **name**, 
-        * **origfilename**, 
-        * **public**, 
-        * **version**, 
+        * **comment**
+        * **keywords**
+        * **name**
+        * **origfilename**
+        * **public**
+        * **version**
         """
         params = dict()
         for keyword in ['comment', 'keywords', 'name', 'origfilename',
@@ -762,14 +761,14 @@ class SeedDMS(object):
     def get_folder_document_ids(self, folder_id):
         retv = list()
         for row in self.get_folder_children(folder_id):
-            if row.get('type') ==  'document':
+            if row.get('type') == 'document':
                 retv.append(int(row.get('id')))
         return sorted(retv)
 
     def get_folder_folder_ids(self, folder_id):
         retv = list()
         for row in self.get_folder_children(folder_id):
-            if row.get('type') ==  'folder':
+            if row.get('type') == 'folder':
                 retv.append(int(row.get('id')))
         return sorted(retv)
 
@@ -841,13 +840,13 @@ class SeedDMS(object):
         * **name**
         * **attributes** NOT SUPPORTED YET
 
-        .. todo: unclear on how to handle the attributes 
+        .. todo: unclear on how to handle the attributes
         """
         params = dict()
         for keyword in ['comment', 'name']:
             params[keyword] = kwargs.get(keyword)
 
-        attributes = kwargs.get('attributes', {})
+        # attributes = kwargs.get('attributes', {})
 
         req_obj = self.rest_post("/folder/:id/createfolder",
                                  argdict={'id': folder_id},
@@ -857,8 +856,7 @@ class SeedDMS(object):
 
         folder_id = req_obj.data.get('id')
 
-
-    def upload_document(self, uploadfile, foldername=None):
+    def upload_document(self, uploadfile, foldername=None, **kwargs):
         """
           arguments:
             - name
@@ -866,6 +864,8 @@ class SeedDMS(object):
             - origfilename
             - foldername (opt)
         """
+        params = dict()
+
         # FIXME: dunno if this works
         datablob = open(uploadfile, "r").read()
 
@@ -905,15 +905,16 @@ class SeedDMS(object):
             - name
             - origfilename
             - foldername (opt)
+
+        # FIXME: dunno if this works
+        datablob = open(uploadfile, "r").read()
+        self.rest_put("/folder/:id/document",
+                                 argdict={'id': folder_id},
+                                 data=datablob,
+                                 params=params)
+        if req_obj.success:
+            return req_obj.data
         """
-        ##  # FIXME: dunno if this works
-        ##  datablob = open(uploadfile, "r").read()
-        ##  self.rest_put("/folder/:id/document",
-        ##                           argdict={'id': folder_id},
-        ##                           data=datablob,
-        ##                           params=params)
-        ##  if req_obj.success:
-        ##      return req_obj.data
         pass
 
     def move_folder(self, folder_id, parent_folder_id):
@@ -929,7 +930,7 @@ class SeedDMS(object):
         """
         """
         req_obj = self.rest_put("/folder/:id/access/clear",
-                                 argdict={'id': folder_id})
+                                argdict={'id': folder_id})
         if req_obj.success:
             return req_obj.data
 
@@ -945,9 +946,9 @@ class SeedDMS(object):
 
         """
         req_obj = self.rest_put("/folder/:id/access/group/add",
-                                 argdict={'id': folder_id},
-                                 params={'id': group_id,
-                                         'mode': mode})
+                                argdict={'id': folder_id},
+                                params={'id': group_id,
+                                        'mode': mode})
         if req_obj.success:
             return req_obj.data
 
@@ -1007,7 +1008,6 @@ class SeedDMS(object):
             - mode, read/readwrite/all
         """
         pass
-
 
     def set_folder_inherits_access(self, folder_id):
         """
@@ -1091,8 +1091,8 @@ class SeedDMS(object):
            sdms.create_group(name="aotearoa")
         """
         req_obj = self.rest_post("/groups",
-                                params={'name': kwargs.get('name'),
-                                        'comment': kwargs.get('comment', '')})
+                                 params={'name': kwargs.get('name'),
+                                         'comment': kwargs.get('comment', '')})
         if req_obj.success:
             return req_obj.data
 
@@ -1183,7 +1183,6 @@ class SeedDMS(object):
         for keyn in ['limit', 'mode', 'query']:
             if keyn in kwargs:
                 params[keyn] = kwargs.get(keyn)
-
 
         req_obj = self.rest_get("/search",
                                 params=params)
@@ -1379,7 +1378,9 @@ class SeedDMS(object):
            sdms.set_disabled_user(user_id)
 
         """
-        req_obj = self.rest_put("/users/:id/disable", argdict={'id': user_id}, params={'disable': True})
+        req_obj = self.rest_put("/users/:id/disable",
+                                argdict={'id': user_id},
+                                params={'disable': True})
         if req_obj.success:
             return req_obj.data
 
@@ -1396,7 +1397,9 @@ class SeedDMS(object):
            sdms.set_enabled_user(user_id)
 
        """
-        req_obj = self.rest_put("/users/:id/disable", argdict={'id': user_id}, params={'disable': False})
+        req_obj = self.rest_put("/users/:id/disable",
+                                argdict={'id': user_id},
+                                params={'disable': False})
         if req_obj.success:
             return req_obj.data
 
@@ -1433,7 +1436,9 @@ class SeedDMS(object):
 
         password = self.encpasswd(password)
 
-        req_obj = self.rest_put("/users/:id/password", argdict={'id': user_id}, params={'password': password})
+        req_obj = self.rest_put("/users/:id/password",
+                                argdict={'id': user_id},
+                                params={'password': password})
         if req_obj.success:
             return req_obj.data
 
@@ -1453,4 +1458,3 @@ class SeedDMS(object):
         req_obj = self.rest_delete("/users/:id", argdict={'id': user_id})
         if req_obj.success:
             return req_obj.data
-
