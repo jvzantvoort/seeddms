@@ -5,7 +5,7 @@
 Name:           python-seeddms
 Version:        0.0.2
 Release:        3
-Summary:        An interface to seeddms REST API
+Summary:        Python library to access the SeedDMS REST API
 
 Group:          Development/Libraries
 License:        MIT
@@ -14,13 +14,11 @@ Source0:        %{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  python2-devel python-setuptools python-sphinx
-Requires:       python-werkzeug
-
 Requires:       python2-requests
-# BuildRequires:  python-jinja2
 
 %description
-TBD
+
+Python library to access the SeedDMS REST API.
 
 %package doc
 Summary:        Documentation for %{name}
@@ -31,8 +29,7 @@ Requires:       %{name} = %{version}-%{release}
 Documentation and examples for %{name}.
 
 %prep
-%setup -q -n %{srcname}-%{version}
-## %{__sed} -i "/platforms/ a\    requires=['Jinja2 (>=2.4)']," setup.py
+%setup -q -n %{name}-%{version}
 
 %build
 %{__python} setup.py build
@@ -43,16 +40,6 @@ popd
 
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
-
-%check
-#{__python} setup.py test
-
-#if 0%{?with_python3}
-#pushd %{py3dir}
-#{__python3} setup.py test
-#popd
-#endif
-
 
 %files
 %doc LICENSE README.md
