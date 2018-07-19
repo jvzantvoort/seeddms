@@ -11,6 +11,7 @@ do_search_by_attr
 
 __author__ = "John van Zantvoort"
 
+import unittest
 import seeddms
 
 from tests.common import SeedDMSWrapper

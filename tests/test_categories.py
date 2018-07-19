@@ -15,6 +15,7 @@ functions:
 
 __author__ = "John van Zantvoort"
 
+import unittest
 import random, string
 import seeddms
 

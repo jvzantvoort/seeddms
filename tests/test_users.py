@@ -18,6 +18,7 @@ change_user_password
 
 __author__ = "John van Zantvoort"
 
+import unittest
 import seeddms
 
 from tests.common import SeedDMSWrapper
@@ -83,6 +84,12 @@ class TestCreateUser(SeedDMSWrapper):
 
 class TestUsers(SeedDMSWrapper):
 
+    def compare_dictionary(self, data_dice1, data_dice2):
+        for keyn in data_dice1.keys():
+            if keyn not in data_dice2:
+                self.fail("not in ref dict: %s" % keyn)
+            if data_dice1[keyn] != data_dice2[keyn]:
+                self.fail("values not the same: %s -> %s" % (data_dice1[keyn], data_dice2[keyn]))
 
     def test_get_users(self):
         ref_data = {u'admin': u'admin', u'guest': u'guest'}
@@ -92,7 +99,7 @@ class TestUsers(SeedDMSWrapper):
             row_login  = row.get('login')
             test_data[row_login] = row_role
 
-        compare_dictionary(ref_data, test_data)
+        self.compare_dictionary(ref_data, test_data)
 
     def test_get_user_by_name(self):
 
@@ -100,7 +107,7 @@ class TestUsers(SeedDMSWrapper):
         if not isinstance(test_data, dict):
             self.fail("not a dict")
 
-        compare_dictionary(CONST_ADMIN_DATA, test_data)
+        self.compare_dictionary(CONST_ADMIN_DATA, test_data)
 
     def test_get_user_by_id(self):
 
@@ -108,7 +115,7 @@ class TestUsers(SeedDMSWrapper):
         if not isinstance(test_data, dict):
             self.fail("not a dict")
 
-        compare_dictionary(CONST_ADMIN_DATA, test_data)
+        self.compare_dictionary(CONST_ADMIN_DATA, test_data)
 
 class TestGetLockedDocuments(SeedDMSWrapper):
 

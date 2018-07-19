@@ -29,6 +29,7 @@ get_folder_id
 
 __author__ = "John van Zantvoort"
 
+import unittest
 import seeddms
 
 from tests.common import SeedDMSWrapper

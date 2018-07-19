@@ -13,6 +13,7 @@ remove_user_from_group
 
 __author__ = "John van Zantvoort"
 
+import unittest
 import seeddms
 
 from tests.common import SeedDMSWrapper
