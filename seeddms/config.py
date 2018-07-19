@@ -3,17 +3,17 @@
 """seeddms.config - $description
 """
 
-import argparse
-import sys
 import os
 import ConfigParser
 
 from .exceptions import SeedDMSException
 
+
 class Config(object):
     """configuration handler for :class:`seeddms`.
 
-    :param baseurl: url path to the rest api (default: ``http://localhost/seeddms/restapi/index.php``)
+    :param baseurl: url path to the rest api (default:
+             ``http://localhost/seeddms/restapi/index.php``)
     :param username: username to login with (default: ``admin``)
     :param password: password to login with (default: ``admin``)
     :param targetfolder: target folder to use on the DMS (default: ``DMS``)
@@ -80,6 +80,6 @@ class Config(object):
         with open(self.configfile, 'wb') as ofh:
             config.write(ofh)
 
+
 if __name__ == '__main__':
     cfg = Config()
-
