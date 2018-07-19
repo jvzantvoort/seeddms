@@ -4,7 +4,7 @@
 
 Name:           python-seeddms
 Version:        0.0.2
-Release:        2
+Release:        3
 Summary:        An interface to seeddms REST API
 
 Group:          Development/Libraries
@@ -64,6 +64,9 @@ popd
 %doc docs/build/html
 
 %changelog
+* Thu Jul 19 2018 John van Zantvoort <john@vanzantvoort.org> 0.0.2-3
+- more fidling with spec (john@vanzantvoort.org)
+
 * Thu Jul 19 2018 John van Zantvoort <john@vanzantvoort.org> 0.0.2-2
 - minor fix on specfile (john@vanzantvoort.org)
 
