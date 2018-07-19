@@ -1,7 +1,6 @@
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 %global srcname seeddms
-%global srcversion 0.0.1
 
 Name:           python-seeddms
 Version:        0.0.2
@@ -11,7 +10,7 @@ Summary:        An interface to seeddms REST API
 Group:          Development/Libraries
 License:        MIT
 URL:            https://github.com/jvzantvoort/seeddms
-Source0:        %{srcname}-%{srcversion}.tar.gz
+Source0:        %{srcname}-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  python2-devel python-setuptools python-sphinx
@@ -32,7 +31,7 @@ Requires:       %{name} = %{version}-%{release}
 Documentation and examples for %{name}.
 
 %prep
-%setup -q -n %{srcname}-%{srcversion}
+%setup -q -n %{srcname}-%{version}
 ## %{__sed} -i "/platforms/ a\    requires=['Jinja2 (>=2.4)']," setup.py
 
 %build
